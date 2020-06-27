@@ -6,10 +6,10 @@ This Kata is based on:
 * [Goring-Kata](https://github.com/emilybache/GildedRose-Refactoring-Kata) that contain implementation in multiple programming languages.
 
 The goal of this kata is to improve the overall code quality by refactoring the existing code and then including new business rules for a new product called
-'Conjured'.
+`Conjured`.
 
-The Gilded Rose Kata contains two classes 'Item' and 'GildedRose'. Item has 'name', 'sell_in' and 'quality' attributes. 
-'GildedRose' class contains the 'update_quality' method responsible for decreasing 'sell_in' and updating the 'quality' attributes for each product item.
+The Gilded Rose Kata contains two classes `Item` and `GildedRose`. Item has `name`, `sell_in` and `quality` attributes. 
+`GildedRose` class contains the `update_quality` method responsible for decreasing `sell_in` and updating the `quality` attributes for each product item.
 
 # Constraints
 
@@ -28,11 +28,11 @@ You can read the detailed requirements [here](requirements.md).
 * The code has a lot of nested if statements that need to be resolved.
 * The code is difficult to read.
 * The code contains hardcoded values.
-* The introduction of the new product 'Conjured' will require class modification. This might break the deeply nested if statements logic.
+* The introduction of the new product `Conjured` will require class modification. This might break the deeply nested if statements logic.
 
 # Approach
 
-Before refactoring the code, we should write unit tests to preserve the existing behaviour of the 'update_quality' method.
+Before refactoring the code, we should write unit tests to preserve the existing behaviour of the `update_quality` method.
 By writing unit tests we can gain better understanding of the current legacy code and the business rules.
 
 We can check the test coverage by running [measure_test_coverage](measure_test_coverage.sh) in our terminal:
@@ -44,11 +44,11 @@ We can check the test coverage by running [measure_test_coverage](measure_test_c
 After write sufficient number of tests, we can start refactoring.
 I refactored the code by creating separate functions for different business rules: 
 
-* 'increase_quality_by_day': Increase quality for products like Brie,
-* 'decrease_quality_by_day': Decrease quality for regular products, 
-* 'update_backstage_passes': Contains business rules for passes products, 
-* 'update_conjured': Contains business rules for conjured products,
-* 'update_legendary': Contains business rules for legendary products,
+* `increase_quality_by_day`: Increase quality for products like Brie,
+* `decrease_quality_by_day`: Decrease quality for regular products, 
+* `update_backstage_passes`: Contains business rules for passes products, 
+* `update_conjured`: Contains business rules for conjured products,
+* `update_legendary`: Contains business rules for legendary products,
 
 The separate method leads to the code being more readable and easy to understand.
 
@@ -61,3 +61,24 @@ This leads to the existing code requiring no modification and eliminates the pos
 
 * Python 3.8
 
+# How to run the tests
+
+Setup virtual environment:
+
+```bash
+python3 -m venv rose-venv
+source rose-venv/bin/activate
+```
+
+To run all tests use:
+
+```bash
+python -m unittest -v test_gilded_rose.py
+python  test_gilded_rose.py GildedRoseUpdaterTest.test_normal_with_zero_quality
+```
+
+To run a particular test use:
+
+```bash
+python  test_gilded_rose.py GildedRoseUpdaterTest.test_normal_with_zero_quality
+```
