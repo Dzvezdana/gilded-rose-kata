@@ -72,13 +72,12 @@ source rose-venv/bin/activate
 
 To run all tests use:
 
-```bash
+```python
 python -m unittest -v test_gilded_rose.py
-python  test_gilded_rose.py GildedRoseUpdaterTest.test_normal_with_zero_quality
 ```
 
 To run a particular test use:
 
-```bash
+```python
 python  test_gilded_rose.py GildedRoseUpdaterTest.test_normal_with_zero_quality
 ```
