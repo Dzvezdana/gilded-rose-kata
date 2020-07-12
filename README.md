@@ -49,7 +49,7 @@ The refactored code consists of:
 * `gilded_rose.py`: Used to update items properties.
 * `products.py`: List of products names, separated here to avoid hardcoding in the updater logic.
 * `test_guilded_rose.py` and `texttestfixture.py`: Tests.
-* `item_updater.py`: Contains the `Item` class and its children classes. The `Item` class is a parent class, which describes and updates regular products.
+* `items.py`: Contains the `Item` class and its children classes. The `Item` class is a parent class, which describes and updates regular products.
 `AgedBrie`, `BackstagePasses`, `Conjured` and `Sulfuras` inherit from the `Item` class and reimplement the `update_quality` method
 based on the specific products' business rules.
 
