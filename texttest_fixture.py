@@ -2,7 +2,7 @@
 from __future__ import print_function
 
 from gilded_rose import *
-from item_updater import ItemFactory
+from items import ItemFactory
 
 if __name__ == "__main__":
     item_factory = ItemFactory()

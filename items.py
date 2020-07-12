@@ -17,8 +17,8 @@ class ItemFactory:
 
         Args:
             name (str): item name.
-            sell_in (int): number of days we have to sell the item.
-            quality (int): item value.
+            sell_in (int): number of days we have left to sell the item.
+            quality (int): item quality value.
 
         Returns:
             product object: Calls a specific product updater.
@@ -48,7 +48,7 @@ class Item:
         Args:
             name (str): item name.
             sell_in (int): number of days we have to sell the item.
-            quality (int): item value.
+            quality (int): item quality value.
         """
         self.name = name
         self.sell_in = sell_in
@@ -89,11 +89,11 @@ class AgedBrie(Item):
     Used to increase the quality by day for Brie (whose value increases
     over time).
     """
-    def _update_quality(self, new_sell_in: int) -> int:
+    def _update_quality(self, sell_in: int) -> int:
         if self.quality < 0:
             return MIN_QUALITY
 
-        if new_sell_in >= 0 and self.quality > 0:
+        if sell_in >= 0 and self.quality > 0:
             return min(self.quality + 1, MAX_QUALITY)
         else:
             return min(self.quality + 2, MAX_QUALITY)
@@ -107,12 +107,12 @@ class BackstagePasses(Item):
         - 3 when there are 5 days or less,
         - drops to 0 after the concert.
     """
-    def _update_quality(self, new_sell_in: int) -> int:
-        if new_sell_in > 10:
+    def _update_quality(self, sell_in: int) -> int:
+        if sell_in > 10:
             return min(self.quality + 1, MAX_QUALITY)
-        elif new_sell_in > 5:
+        elif sell_in > 5:
             return min(self.quality + 2, MAX_QUALITY)
-        elif new_sell_in >= 0:
+        elif sell_in >= 0:
             return min(self.quality + 3, MAX_QUALITY)
         else:
             return MIN_QUALITY
@@ -124,8 +124,11 @@ class Conjured(Item):
         - by 2 before and on the sell in date,
         - by 4 after the sell in date.
     """
-    def _update_quality(self, new_sell_in: int) -> int:
-        if new_sell_in >= 0:
+    def _update_quality(self, sell_in: int) -> int:
+        if self.quality < 0:
+            return MIN_QUALITY
+
+        if sell_in >= 0:
             return max(self.quality - 2, MIN_QUALITY)
         else:
             return max(self.quality - 4, MIN_QUALITY)
@@ -135,11 +138,11 @@ class Sulfuras(Item):
     """
     Sulfuras is a legendary item that never has to be sold or decreases in quality.
     """
-    def _update_quality(self, new_sell_in: int) -> int:
+    def _update_quality(self, sell_in: int) -> int:
         if self.quality > LEGENDARY_MAX_QUALITY:
             return LEGENDARY_MAX_QUALITY
         else:
-            return self.quality
+            return LEGENDARY_MAX_QUALITY
 
     def _update_sell_in(self) -> None:
         pass

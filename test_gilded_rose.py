@@ -1,7 +1,7 @@
 import unittest
 
 from gilded_rose import GildedRoseUpdater
-from item_updater import ItemFactory
+from items import ItemFactory
 
 item_factory = ItemFactory()
 

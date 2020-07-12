@@ -3,7 +3,7 @@
 The Gilded Rose is a refactoring Kata and its purpose is to enhance your refactoring skills.
 This Kata is based on: 
 * [GildedRose](https://github.com/NotMyself/GildedRose) which contains the original implementation and,
-* [Goring-Kata](https://github.com/emilybache/GildedRose-Refactoring-Kata) that contain implementation in multiple programming languages.
+* [Goring-Kata](https://github.com/emilybache/GildedRose-Refactoring-Kata) that contains implementations in multiple programming languages.
 
 The goal of this kata is to improve the overall code quality by refactoring the existing code and then including new business rules for a new product called
 `Conjured`.
@@ -39,25 +39,26 @@ By writing unit tests we can gain better understanding of the current legacy cod
 We can check the test coverage by running [measure_test_coverage](measure_test_coverage.sh) in our terminal:
 
 ```bash
-./measure_test_coverage
+sh ./measure_test_coverage
 ```
 
 After writing sufficient number of tests, we can start refactoring.
 I refactored the code by creating separate logic for different business rules and splitting the existing code in multiple files.
-The refactor code consists of:
+The refactored code consists of:
 
 * `gilded_rose.py`: Used to update items properties.
 * `products.py`: List of products names, separated here to avoid hardcoding in the updater logic.
-* `test_guilded_rose.py` and `texttestfixture.py`: Unit tests.
+* `test_guilded_rose.py` and `texttestfixture.py`: Tests.
 * `item_updater.py`: Contains the `Item` class and its children classes. The `Item` class is a parent class, which describes and updates regular products.
-`AgedBrie`, `BackstagePasses`, `Conjured` and `Sulfuras` inherit from the `Item` class and reimplement the `_update_quality` method
+`AgedBrie`, `BackstagePasses`, `Conjured` and `Sulfuras` inherit from the `Item` class and reimplement the `update_quality` method
 based on the specific products' business rules.
 
 The separate product classes lead to the code being more readable and easy to understand.
 
-Any new product that follows the existing business rules can make use of the existing classes and new 
-products that require new business rules can be easily introduced by creating a new child class. 
-This leads to the existing code requiring no modification and eliminates the possibility to breaking code used by previous products.
+Any new product that follows the existing business rules can make use of the existing classes. New 
+products that require new business rules can easily be introduced by creating a new child class. 
+Because of this, adding new products in the future will not require modification of the existing code.
+This eliminates the possibility of breaking any code already used by previous products.
 
 
 # Dependencies
