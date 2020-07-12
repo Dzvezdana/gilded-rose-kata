@@ -1,12 +1,13 @@
 import unittest
 
 from gilded_rose import GildedRoseUpdater
-from item_factory import ItemFactory
+from item_updater import ItemFactory
 
 item_factory = ItemFactory()
 
 
 class GildedRoseUpdaterTest(unittest.TestCase):
+    # Regular Products
     def test_normal_item_before_sell_date(self):
         items = [item_factory.create(name="foo", sell_in=10, quality=4)]
         gilded_rose = GildedRoseUpdater(items)
@@ -20,7 +21,7 @@ class GildedRoseUpdaterTest(unittest.TestCase):
         gilded_rose = GildedRoseUpdater(items)
         gilded_rose.update_quality()
         self.assertEqual(-1, items[0].sell_in)
-        self.assertEqual(8, items[0].quality)
+        self.assertEqual(7, items[0].quality)
 
     def test_normal_item_after_sell_date(self):
         items = [item_factory.create(name="foo", sell_in=-10, quality=10)]
@@ -42,21 +43,21 @@ class GildedRoseUpdaterTest(unittest.TestCase):
         gilded_rose = GildedRoseUpdater(items)
         gilded_rose.update_quality()
         self.assertEqual(1, items[0].sell_in)
-        self.assertEqual(1, items[0].quality)
+        self.assertEqual(2, items[0].quality)
 
     def test_brie_on_sell_date(self):
         items = [item_factory.create(name="Aged Brie", sell_in=0, quality=0)]
         gilded_rose = GildedRoseUpdater(items)
         gilded_rose.update_quality()
         self.assertEqual(-1, items[0].sell_in)
-        self.assertEqual(1, items[0].quality)
+        self.assertEqual(2, items[0].quality)
 
     def test_brie_after_sell_date(self):
         items = [item_factory.create(name="Aged Brie", sell_in=-10, quality=0)]
         gilded_rose = GildedRoseUpdater(items)
         gilded_rose.update_quality()
         self.assertEqual(-11, items[0].sell_in)
-        self.assertEqual(1, items[0].quality)
+        self.assertEqual(2, items[0].quality)
 
     def test_brie_max_quality(self):
         items = [item_factory.create(name="Aged Brie", sell_in=2, quality=50)]
@@ -84,21 +85,21 @@ class GildedRoseUpdaterTest(unittest.TestCase):
         items = [item_factory.create(name="Sulfuras, Hand of Ragnaros", sell_in=0, quality=80)]
         gilded_rose = GildedRoseUpdater(items)
         gilded_rose.update_quality()
-        self.assertEqual(-1, items[0].sell_in)
+        self.assertEqual(0, items[0].sell_in)
         self.assertEqual(80, items[0].quality)
 
     def test_sulfuras_before_sell_date(self):
         items = [item_factory.create(name="Sulfuras, Hand of Ragnaros", sell_in=10, quality=80)]
         gilded_rose = GildedRoseUpdater(items)
         gilded_rose.update_quality()
-        self.assertEqual(9, items[0].sell_in)
+        self.assertEqual(10, items[0].sell_in)
         self.assertEqual(80, items[0].quality)
 
     def test_sulfuras_after_sell_date(self):
         items = [item_factory.create(name="Sulfuras, Hand of Ragnaros", sell_in=-1, quality=80)]
         gilded_rose = GildedRoseUpdater(items)
         gilded_rose.update_quality()
-        self.assertEqual(-2, items[0].sell_in)
+        self.assertEqual(-1, items[0].sell_in)
         self.assertEqual(80, items[0].quality)
 
     def test_sulfuras_max_quality(self):
@@ -120,8 +121,20 @@ class GildedRoseUpdaterTest(unittest.TestCase):
         gilded_rose.update_quality()
         self.assertEqual(22, items[0].quality)
 
+    def test_backstage_sell_in_7(self):
+        items = [item_factory.create(name="BackStage Passes to a TAFKAL80ETC concert", sell_in=7, quality=20)]
+        gilded_rose = GildedRoseUpdater(items)
+        gilded_rose.update_quality()
+        self.assertEqual(22, items[0].quality)
+
     def test_backstage_sell_in_5(self):
         items = [item_factory.create(name="BackStage Passes to a TAFKAL80ETC concert", sell_in=5, quality=20)]
+        gilded_rose = GildedRoseUpdater(items)
+        gilded_rose.update_quality()
+        self.assertEqual(23, items[0].quality)
+
+    def test_backstage_sell_in_4(self):
+        items = [item_factory.create(name="BackStage Passes to a TAFKAL80ETC concert", sell_in=4, quality=20)]
         gilded_rose = GildedRoseUpdater(items)
         gilded_rose.update_quality()
         self.assertEqual(23, items[0].quality)
@@ -130,7 +143,7 @@ class GildedRoseUpdaterTest(unittest.TestCase):
         items = [item_factory.create(name="BackStage Passes to a TAFKAL80ETC concert", sell_in=0, quality=49)]
         gilded_rose = GildedRoseUpdater(items)
         gilded_rose.update_quality()
-        self.assertEqual(50, items[0].quality)
+        self.assertEqual(0, items[0].quality)
 
     def test_backstage_after_concert(self):
         items = [item_factory.create(name="BackStage Passes to a TAFKAL80ETC concert", sell_in=-1, quality=49)]
@@ -155,7 +168,7 @@ class GildedRoseUpdaterTest(unittest.TestCase):
         items = [item_factory.create(name="Conjured Mana Cake", sell_in=0, quality=6)]
         gilded_rose = GildedRoseUpdater(items)
         gilded_rose.update_quality()
-        self.assertEqual(4, items[0].quality)
+        self.assertEqual(2, items[0].quality)
 
     def test_conjured_after_sell_date(self):
         items = [item_factory.create(name="Conjured Mana Cake", sell_in=-2, quality=6)]

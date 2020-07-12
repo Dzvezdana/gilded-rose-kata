@@ -28,6 +28,7 @@ You can read the detailed requirements [here](requirements.md).
 * The code has a lot of nested if statements that need to be resolved.
 * The code is difficult to read.
 * The code contains hardcoded values.
+* The code contains duplicated logic.
 * The introduction of the new product `Conjured` will require class modification. This might break the deeply nested if statements logic.
 
 # Approach
@@ -41,19 +42,17 @@ We can check the test coverage by running [measure_test_coverage](measure_test_c
 ./measure_test_coverage
 ```
 
-After write sufficient number of tests, we can start refactoring.
-I refactored the code by creating separate functions for different business rules: 
+After writing sufficient number of tests, we can start refactoring.
+I refactored the code by creating separate logic for different business rules:
 
-* `increase_quality_by_day`: Increase quality for products like Brie,
-* `decrease_quality_by_day`: Decrease quality for regular products, 
-* `update_backstage_passes`: Contains business rules for passes products, 
-* `update_conjured`: Contains business rules for conjured products,
-* `update_legendary`: Contains business rules for legendary products,
+* The `Item` class is a parent class, which describes and updates regular products.
+* `AgedBrie`, `BackstagePasses`, `Conjured` and `Sulfuras` inherit from the `Item` class and reimplement the `_update_quality` method
+based on the specific products' business rules.
 
-The separate method leads to the code being more readable and easy to understand.
+The separate product classes lead to the code being more readable and easy to understand.
 
-Any new product that follows the existing business rules can make use of the existing methods and new 
-products that require new business rules can be easily introduced by creating a new method. 
+Any new product that follows the existing business rules can make use of the existing classes and new 
+products that require new business rules can be easily introduced by creating a new child class. 
 This leads to the existing code requiring no modification and eliminates the possibility to breaking code used by previous products.
 
 

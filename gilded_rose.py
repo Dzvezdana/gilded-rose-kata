@@ -14,4 +14,4 @@ class GildedRoseUpdater(object):
         Iterates through and updates items.
         """
         for item in self.items:
-            item.update_quality()
+            item.update()
