@@ -43,10 +43,14 @@ We can check the test coverage by running [measure_test_coverage](measure_test_c
 ```
 
 After writing sufficient number of tests, we can start refactoring.
-I refactored the code by creating separate logic for different business rules:
+I refactored the code by creating separate logic for different business rules and splitting the existing code in multiple files.
+The refactor code consists of:
 
-* The `Item` class is a parent class, which describes and updates regular products.
-* `AgedBrie`, `BackstagePasses`, `Conjured` and `Sulfuras` inherit from the `Item` class and reimplement the `_update_quality` method
+* `gilded_rose.py`: Used to update items properties.
+* `products.py`: List of products names, separated here to avoid hardcoding in the updater logic.
+* `test_guilded_rose.py` and `texttestfixture.py`: Unit tests.
+* `item_updater.py`: Contains the `Item` class and its children classes. The `Item` class is a parent class, which describes and updates regular products.
+`AgedBrie`, `BackstagePasses`, `Conjured` and `Sulfuras` inherit from the `Item` class and reimplement the `_update_quality` method
 based on the specific products' business rules.
 
 The separate product classes lead to the code being more readable and easy to understand.
